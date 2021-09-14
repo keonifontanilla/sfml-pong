@@ -24,31 +24,28 @@ bool Ball::CollisionCheck(Player& player)
 	return m_ball.getGlobalBounds().intersects(player.GetPaddle().getGlobalBounds());
 }
 
-void Ball::PaddleCollision(Player& player)
+void Ball::PaddleCollision(Player& player, sf::Vector2f& pos)
 {
     float xCenter = player.GetPaddle().getPosition().x + (player.GetPaddle().getSize().x / 2);
     float yCenter = player.GetPaddle().getPosition().y + (player.GetPaddle().getSize().y / 2);
 	float midRange = 20.0f;
 
-    /*if (m_ball.getPosition().y < yCenter && m_ball.getPosition().y >= m_player1.GetPaddle().getPosition().y)
-        std::cout << "LOW" << std::endl;
-    else if (m_ball.getPosition().y > yCenter && m_ball.getPosition().y <= (m_player1.GetPaddle().getPosition().y + m_player1.GetPaddle().getSize().y))
-        std::cout << "HIGH" << std::endl;*/
-
-	/*if (CollisionCheck(m_player1))
+	if (m_ball.getPosition().y < yCenter - midRange && m_ball.getPosition().y >= player.GetPaddle().getPosition().y)
 	{
-		std::cout << "BALL Y " << m_ball.getPosition().y << std::endl;
-		std::cout << "CENTER Y " << yCenter << std::endl;
-		std::cout << "+ RANGE " << yCenter + midRange << std::endl;
-		std::cout << "- RANGE " << yCenter - midRange << std::endl;
-	}*/
-
-	if (m_ball.getPosition().y < yCenter + midRange && m_ball.getPosition().y > yCenter - midRange)
+		std::cout << "LOW" << std::endl;
+	}
+	else if (m_ball.getPosition().y < yCenter + midRange && m_ball.getPosition().y > yCenter - midRange)
 	{
-		// Check if paddle is moving
 		std::cout << "MID" << std::endl;
 	}
-
+	else if (m_ball.getPosition().y > yCenter + midRange && m_ball.getPosition().y <= (player.GetPaddle().getPosition().y + player.GetPaddle().getSize().y))
+	{
+		std::cout << "HIGH" << std::endl;
+	}
+	
+	pos.x = -pos.x;
+	m_speed = -m_speed;
+	m_angle = -m_angle;
 }
 
 void Ball::Update(float dt)
@@ -58,13 +55,10 @@ void Ball::Update(float dt)
 	pos.x = m_velocity.x * dt * std::cos(angleRad) * m_speed;
 	pos.y = m_velocity.y * dt * std::sin(angleRad) * m_speed;
 
-	if (CollisionCheck(m_player1) || CollisionCheck(m_player2))
-	{
-		PaddleCollision(m_player1);
-		pos.x = -pos.x;
-		m_speed = -m_speed;
-		m_angle = -m_angle;
-	}
+	if (CollisionCheck(m_player1))
+		PaddleCollision(m_player1, pos);
+	else if (CollisionCheck(m_player2))
+		PaddleCollision(m_player2, pos);
 
 	if (m_ball.getPosition().y - constants::ballRadius < 0 || m_ball.getPosition().y + constants::ballRadius > 600)
 	{

@@ -22,7 +22,7 @@ public:
 
 private:
 	bool CollisionCheck(Player& player);
-	void PaddleCollision(Player& player);
+	void PaddleCollision(Player& player, sf::Vector2f& pos);
 };
 
 #endif // !BALL_H
