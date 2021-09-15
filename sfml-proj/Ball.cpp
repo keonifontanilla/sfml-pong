@@ -26,12 +26,18 @@ bool Ball::CollisionCheck(Player& player)
 
 void Ball::PaddleCollision(Player& player, sf::Vector2f& pos)
 {
-    float xCenter = player.GetPaddle().getPosition().x + (player.GetPaddle().getSize().x / 2);
+	const float midRange = 20.0f;
+	float xCenter = player.GetPaddle().getPosition().x + (player.GetPaddle().getSize().x / 2);
     float yCenter = player.GetPaddle().getPosition().y + (player.GetPaddle().getSize().y / 2);
-	float midRange = 20.0f;
 
 	if (m_ball.getPosition().y < yCenter - midRange && m_ball.getPosition().y >= player.GetPaddle().getPosition().y)
 	{
+		// (m_ball.getPosition().y < player.GetPaddle().getPosition().x + constants::paddleWidth) PADDLE TOP COLLISION
+		if (pos.x < 0 && pos.y > 0 || pos.x > 0 && pos.y > 0)
+		{
+			pos.y = -pos.y;
+			m_velocity.y = -m_velocity.y;
+		}
 		std::cout << "LOW" << std::endl;
 	}
 	else if (m_ball.getPosition().y < yCenter + midRange && m_ball.getPosition().y > yCenter - midRange)
@@ -40,6 +46,11 @@ void Ball::PaddleCollision(Player& player, sf::Vector2f& pos)
 	}
 	else if (m_ball.getPosition().y > yCenter + midRange && m_ball.getPosition().y <= (player.GetPaddle().getPosition().y + player.GetPaddle().getSize().y))
 	{
+		if (pos.x < 0 && pos.y < 0 || pos.x > 0 && pos.y < 0)
+		{
+			pos.y = -pos.y;
+			m_velocity.y = -m_velocity.y;
+		}
 		std::cout << "HIGH" << std::endl;
 	}
 	
@@ -50,15 +61,16 @@ void Ball::PaddleCollision(Player& player, sf::Vector2f& pos)
 
 void Ball::Update(float dt)
 {	
-	sf::Vector2f pos;
-	float angleRad = m_angle * constants::PI / 180.0f;
-	pos.x = m_velocity.x * dt * std::cos(angleRad) * m_speed;
-	pos.y = m_velocity.y * dt * std::sin(angleRad) * m_speed;
+	float angleRad = 0.0f;
 
 	if (CollisionCheck(m_player1))
 		PaddleCollision(m_player1, pos);
 	else if (CollisionCheck(m_player2))
 		PaddleCollision(m_player2, pos);
+
+	angleRad = m_angle * constants::PI / 180.0f;
+	pos.x = m_velocity.x * dt * std::cos(angleRad) * m_speed;
+	pos.y = m_velocity.y * dt * std::sin(angleRad) * m_speed;
 
 	if (m_ball.getPosition().y - constants::ballRadius < 0 || m_ball.getPosition().y + constants::ballRadius > 600)
 	{

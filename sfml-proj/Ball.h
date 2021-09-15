@@ -10,6 +10,7 @@ private:
 	Player& m_player2;
 	sf::CircleShape m_ball;
 	sf::Vector2f m_velocity;
+	sf::Vector2f pos;
 
 	float m_angle = 45.0f;
 	float m_speed = 400.0f;
