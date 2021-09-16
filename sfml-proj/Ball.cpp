@@ -3,11 +3,11 @@
 #include "Ball.h"
 #include <iostream>
 
-Ball::Ball(Player& player1, Player& player2, sf::Vector2f pos) 
-	: m_ball(constants::ballRadius), 
-	  m_player1(player1),
-	  m_player2(player2),
-	  m_velocity(-1.0f, -1.0f)
+Ball::Ball(Player& player1, Player& player2, sf::Vector2f pos)
+	: m_ball(constants::ballRadius),
+	m_player1(player1),
+	m_player2(player2),
+	m_velocity(-1.0f, -1.0f)
 {
 	m_ball.setFillColor(sf::Color(192, 192, 192));
 	m_ball.setPosition(pos.x, pos.y);
@@ -30,9 +30,19 @@ void Ball::PaddleCollision(Player& player, sf::Vector2f& pos)
 	float xCenter = player.GetPaddle().getPosition().x + (player.GetPaddle().getSize().x / 2);
     float yCenter = player.GetPaddle().getPosition().y + (player.GetPaddle().getSize().y / 2);
 
+	// Top of paddle
+	if ((m_ball.getPosition().x >= player.GetPaddle().getPosition().x)
+		&& (m_ball.getPosition().x <= player.GetPaddle().getPosition().x + constants::paddleWidth)
+		&& (m_ball.getPosition().y <= player.GetPaddle().getPosition().y))
+	{
+		pos.y = -pos.y;
+		m_velocity.y = -m_velocity.y;
+		std::cout << "TOP" << std::endl;
+	}
+
+	// Side of paddle
 	if (m_ball.getPosition().y < yCenter - midRange && m_ball.getPosition().y >= player.GetPaddle().getPosition().y)
 	{
-		// (m_ball.getPosition().y < player.GetPaddle().getPosition().x + constants::paddleWidth) PADDLE TOP COLLISION
 		if (pos.x < 0 && pos.y > 0 || pos.x > 0 && pos.y > 0)
 		{
 			pos.y = -pos.y;
