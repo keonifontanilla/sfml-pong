@@ -38,10 +38,16 @@ void Ball::PaddleCollision(Player& player, sf::Vector2f& pos)
 		pos.y = -pos.y;
 		m_velocity.y = -m_velocity.y;
 		std::cout << "TOP" << std::endl;
-	}
-
-	// Side of paddle
-	if (m_ball.getPosition().y < yCenter - midRange && m_ball.getPosition().y >= player.GetPaddle().getPosition().y)
+	} // Bottom of paddle
+	else if ((m_ball.getPosition().x >= player.GetPaddle().getPosition().x)
+		&& (m_ball.getPosition().x <= player.GetPaddle().getPosition().x + constants::paddleWidth)
+		&& (m_ball.getPosition().y >= player.GetPaddle().getPosition().y + constants::paddleHeight))
+	{
+		pos.y = -pos.y;
+		m_velocity.y = -m_velocity.y;
+		std::cout << "BOTTOM" << std::endl;
+	} // Side of paddle
+	else if (m_ball.getPosition().y < yCenter - midRange && m_ball.getPosition().y >= player.GetPaddle().getPosition().y)
 	{
 		if (pos.x < 0 && pos.y > 0 || pos.x > 0 && pos.y > 0)
 		{
