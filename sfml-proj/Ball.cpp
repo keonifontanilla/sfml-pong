@@ -9,6 +9,8 @@ Ball::Ball(Player& player1, Player& player2, sf::Vector2f pos)
 	m_player2(player2),
 	m_velocity(-1.0f, -1.0f)
 {
+	/*m_velocity.x = ((std::rand() % 2 == 0) ? 1.0f : -1.0f);
+	m_velocity.y = ((std::rand() % 2 == 0) ? 1.0f : -1.0f);*/
 	m_ball.setFillColor(sf::Color(192, 192, 192));
 	m_ball.setPosition(pos.x, pos.y);
 	m_ball.setOrigin(constants::ballRadius, constants::ballRadius);
@@ -37,6 +39,7 @@ void Ball::PaddleCollision(Player& player, sf::Vector2f& pos)
 	{
 		pos.y = -pos.y;
 		m_velocity.y = -m_velocity.y;
+
 		std::cout << "TOP" << std::endl;
 	} // Bottom of paddle
 	else if ((m_ball.getPosition().x >= player.GetPaddle().getPosition().x)
@@ -79,25 +82,28 @@ void Ball::Update(float dt)
 {	
 	float angleRad = 0.0f;
 
-	if (CollisionCheck(m_player1))
-		PaddleCollision(m_player1, pos);
-	else if (CollisionCheck(m_player2))
-		PaddleCollision(m_player2, pos);
+	if (Ball::CollisionCheck(m_player1))
+		Ball::PaddleCollision(m_player1, pos);
+	else if (Ball::CollisionCheck(m_player2))
+		Ball::PaddleCollision(m_player2, pos);
 
 	angleRad = m_angle * constants::PI / 180.0f;
 	pos.x = m_velocity.x * dt * std::cos(angleRad) * m_speed;
 	pos.y = m_velocity.y * dt * std::sin(angleRad) * m_speed;
 
-	if (m_ball.getPosition().y - constants::ballRadius < 0 || m_ball.getPosition().y + constants::ballRadius > 600)
+	if (m_ball.getPosition().y - constants::ballRadius < 0 || m_ball.getPosition().y + constants::ballRadius > constants::windowHeight)
 	{
 		pos.y = -pos.y;
 		m_angle = -m_angle;
 	}
+
+	if (m_ball.getPosition().x < 0 || m_ball.getPosition().x > constants::windowWidth)
+		Ball::Reset();
 
 	m_ball.move(pos);
 }
 
 void Ball::Reset()
 {
-	
+	m_ball.setPosition(constants::windowWidth / 2, constants::windowHeight / 2);
 }

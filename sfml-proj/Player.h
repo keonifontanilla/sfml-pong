@@ -13,6 +13,7 @@ private:
 public:
 	Player(sf::Vector2f pos, int playerNum);
 	sf::RectangleShape GetPaddle();	
+	sf::Vector2f GetVelocity();
 	void Update();
 
 private:

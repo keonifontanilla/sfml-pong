@@ -14,7 +14,7 @@ private:
 
 public:
 	Game(sf::RenderWindow& window);
-	void Update(float dt);
+	void Update(bool& startPlaying, float dt);
 	void Render();
 };
 

@@ -13,6 +13,11 @@ sf::RectangleShape Player::GetPaddle()
 	return m_paddle;
 }
 
+sf::Vector2f Player::GetVelocity()
+{
+	return m_velocity;
+}
+
 void Player::MoveUp()
 {
 	m_velocity.y = -5.0f;
@@ -28,9 +33,9 @@ void Player::MoveDown()
 void Player::PaddleCheckBounds()
 {
 	if (m_paddle.getPosition().y < 0)
-		MoveDown();
+		Player::MoveDown();
 	if (m_paddle.getPosition().y + constants::paddleHeight > 600)
-		MoveUp();
+		Player::MoveUp();
 }
 
 void Player::Update()
@@ -38,17 +43,17 @@ void Player::Update()
 	if (m_playerNum == 0)
 	{
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))
-			MoveUp();
+			Player::MoveUp();
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::S))
-			MoveDown();
+			Player::MoveDown();
 	}
 	else
 	{
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
-			MoveUp();
+			Player::MoveUp();
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
-			MoveDown();
+			Player::MoveDown();
 	}
 
-	PaddleCheckBounds();
+	Player::PaddleCheckBounds();
 }

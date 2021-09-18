@@ -22,6 +22,9 @@
     <Filter Include="Ball">
       <UniqueIdentifier>{dbff3537-15ce-486c-9218-963beee384b2}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Score">
+      <UniqueIdentifier>{553a568b-d6ac-4ceb-920c-b51ae89b1c3f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -35,6 +38,9 @@
     </ClCompile>
     <ClCompile Include="Ball.cpp">
       <Filter>Ball</Filter>
+    </ClCompile>
+    <ClCompile Include="Score.cpp">
+      <Filter>Score</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -52,6 +58,9 @@
     </ClInclude>
     <ClInclude Include="Constants.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Score.h">
+      <Filter>Score</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

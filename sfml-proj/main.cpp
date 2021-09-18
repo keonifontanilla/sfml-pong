@@ -11,6 +11,7 @@ int main()
     sf::RenderWindow window(sf::VideoMode(constants::windowWidth, constants::windowHeight), "Pong");
     window.setFramerateLimit(60);
 
+    bool startPlaying = false;
     Game game(window);
     
     sf::Clock clock;
@@ -25,7 +26,7 @@ int main()
 
         float dt = clock.restart().asSeconds();
 
-        game.Update(dt);
+        game.Update(startPlaying, dt);
         game.Render();
     }
     

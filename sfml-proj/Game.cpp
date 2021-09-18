@@ -11,11 +11,19 @@ Game::Game(sf::RenderWindow& window)
 
 }
 
-void Game::Update(float dt)
+void Game::Update(bool& startPlaying, float dt)
 {
-    m_player1.Update();
-    m_player2.Update();
-    m_ball.Update(dt);
+    if (!startPlaying)
+    {
+        if (sf::Keyboard().isKeyPressed(sf::Keyboard::Space))
+            startPlaying = true;
+    }
+    else
+    {
+        m_player1.Update();
+        m_player2.Update();
+        m_ball.Update(dt);
+    }
 }
 
 void Game::Render()
