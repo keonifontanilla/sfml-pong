@@ -6,11 +6,10 @@
 Ball::Ball(Player& player1, Player& player2, sf::Vector2f pos)
 	: m_ball(constants::ballRadius),
 	m_player1(player1),
-	m_player2(player2),
-	m_velocity(-1.0f, -1.0f)
+	m_player2(player2)
 {
-	/*m_velocity.x = ((std::rand() % 2 == 0) ? 1.0f : -1.0f);
-	m_velocity.y = ((std::rand() % 2 == 0) ? 1.0f : -1.0f);*/
+	m_velocity.x = ((std::rand() % 2 == 0) ? 1.0f : -1.0f);
+	m_velocity.y = ((std::rand() % 2 == 0) ? 1.0f : -1.0f);
 	m_ball.setFillColor(sf::Color(192, 192, 192));
 	m_ball.setPosition(pos.x, pos.y);
 	m_ball.setOrigin(constants::ballRadius, constants::ballRadius);

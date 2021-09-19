@@ -8,6 +8,7 @@
 
 int main()
 {
+    srand(time(NULL));
     sf::RenderWindow window(sf::VideoMode(constants::windowWidth, constants::windowHeight), "Pong");
     window.setFramerateLimit(60);
 

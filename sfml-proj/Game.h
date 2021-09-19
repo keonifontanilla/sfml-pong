@@ -2,6 +2,7 @@
 #define GAME_H
 #include "Player.h"
 #include "Ball.h"
+#include "Score.h"
 #include "Constants.h"
 
 class Game
@@ -11,6 +12,9 @@ private:
 	Player m_player1;
 	Player m_player2;
 	Ball m_ball;
+	sf::Font font;
+	Score m_score1;
+	Score m_score2;
 
 public:
 	Game(sf::RenderWindow& window);
