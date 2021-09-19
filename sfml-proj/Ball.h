@@ -26,7 +26,8 @@ public:
 
 private:
 	bool CollisionCheck(Player& player);
-	void PaddleCollision(Player& player, sf::Vector2f& pos);
+	void PaddleCollision(Player& player, std::string hitPos);
+	bool PaddleTopCollision(Player& player);
 };
 
 #endif // !BALL_H
