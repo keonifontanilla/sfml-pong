@@ -3,10 +3,12 @@
 #include "Ball.h"
 #include <iostream>
 
-Ball::Ball(Player& player1, Player& player2, sf::Vector2f pos)
+Ball::Ball(Player& player1, Player& player2, Score& score1, Score& score2, sf::Vector2f pos)
 	: m_ball(constants::ballRadius),
 	m_player1(player1),
-	m_player2(player2)
+	m_player2(player2),
+	m_score1(score1),
+	m_score2(score2)
 {
 	m_velocity.x = ((std::rand() % 2 == 0) ? 1.0f : -1.0f);
 	m_velocity.y = ((std::rand() % 2 == 0) ? 1.0f : -1.0f);
@@ -96,8 +98,16 @@ void Ball::Update(float dt)
 		m_angle = -m_angle;
 	}
 
-	if (m_ball.getPosition().x < 0 || m_ball.getPosition().x > constants::windowWidth)
+	if (m_ball.getPosition().x < 0)
+	{
 		Ball::Reset();
+		m_score1.IncrementScore();
+	}
+	else if (m_ball.getPosition().x > constants::windowWidth)
+	{
+		Ball::Reset();
+		m_score2.IncrementScore();
+	}
 
 	m_ball.move(pos);
 }

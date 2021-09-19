@@ -5,9 +5,9 @@ Game::Game(sf::RenderWindow& window)
     : m_window(window),
     m_player1(sf::Vector2f(0.0f, ((window.getSize().y - 100.0f) / 2) - constants::paddleHeight), 0),
     m_player2(sf::Vector2f(window.getSize().x - constants::paddleWidth, ((window.getSize().y + 100.0f) / 2)), 1),
-    m_ball(m_player1, m_player2, sf::Vector2f(window.getSize().x / 2.0f, window.getSize().y / 2.0f)),
     m_score1(font, sf::Vector2f(4.0f, 0.0f)),
-    m_score2(font, sf::Vector2f(window.getSize().x - 20.0f, 0.0f))
+    m_score2(font, sf::Vector2f(window.getSize().x - 20.0f, 0.0f)),
+    m_ball(m_player1, m_player2, m_score1, m_score2, sf::Vector2f(window.getSize().x / 2.0f, window.getSize().y / 2.0f))
 {
 
 }
