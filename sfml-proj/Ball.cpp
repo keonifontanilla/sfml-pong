@@ -39,6 +39,7 @@ void Ball::PaddleCollision(Player& player, HitPos hitPos)
 			m_ball.setPosition(m_player1.GetPaddle().getPosition().x + 50.0f, m_player1.GetPaddle().getPosition().y - 50.0f);
 		pos.y = -pos.y;
 		m_velocity.y = -m_velocity.y;
+		m_angle = -m_angle;
 	}
 	else if (hitPos == HitPos::topRight)
 	{
@@ -46,6 +47,7 @@ void Ball::PaddleCollision(Player& player, HitPos hitPos)
 			m_ball.setPosition(m_player2.GetPaddle().getPosition().x - 50.0f, m_player2.GetPaddle().getPosition().y - 50.0f);
 		pos.y = -pos.y;
 		m_velocity.y = -m_velocity.y;
+		m_angle = -m_angle;
 	}
 	else if (hitPos == HitPos::bottomLeft)
 	{
@@ -53,6 +55,7 @@ void Ball::PaddleCollision(Player& player, HitPos hitPos)
 			m_ball.setPosition(m_player1.GetPaddle().getPosition().x + 50.0f, m_player1.GetPaddle().getPosition().y + constants::paddleHeight + 50.0f);
 		pos.y = -pos.y;
 		m_velocity.y = -m_velocity.y;
+		m_angle = -m_angle;
 	}
 	else if (hitPos == HitPos::bottomRight)
 	{
@@ -60,6 +63,7 @@ void Ball::PaddleCollision(Player& player, HitPos hitPos)
 			m_ball.setPosition(m_player2.GetPaddle().getPosition().x - 50.0f, m_player2.GetPaddle().getPosition().y + constants::paddleHeight + 50.0f);
 		pos.y = -pos.y;
 		m_velocity.y = -m_velocity.y;
+		m_angle = -m_angle;
 	}
 	else if (m_ball.getPosition().y < yCenter - midRange && m_ball.getPosition().y >= player.GetPaddle().getPosition().y)
 	{
@@ -67,11 +71,18 @@ void Ball::PaddleCollision(Player& player, HitPos hitPos)
 		{
 			pos.y = -pos.y;
 			m_velocity.y = -m_velocity.y;
+			m_angle = 30.0f;
+		}
+		else
+		{
+			m_angle = -m_angle;
 		}
 		std::cout << "LOW" << std::endl;
 	}
 	else if (m_ball.getPosition().y < yCenter + midRange && m_ball.getPosition().y > yCenter - midRange)
 	{
+		m_angle = 45.0f;
+		m_angle = -m_angle;
 		std::cout << "MID" << std::endl;
 	}
 	else if (m_ball.getPosition().y > yCenter + midRange && m_ball.getPosition().y <= (player.GetPaddle().getPosition().y + player.GetPaddle().getSize().y))
@@ -80,13 +91,17 @@ void Ball::PaddleCollision(Player& player, HitPos hitPos)
 		{
 			pos.y = -pos.y;
 			m_velocity.y = -m_velocity.y;
+			m_angle = 30.0f;
+		}
+		else
+		{
+			m_angle = -m_angle;
 		}
 		std::cout << "HIGH" << std::endl;
 	}
 	
 	pos.x = -pos.x;
-	m_speed = -m_speed;
-	m_angle = -m_angle;
+	m_speed = -m_speed * 1.05f;
 }
 
 bool Ball::PaddleTopCollision(Player& player)
@@ -148,5 +163,9 @@ void Ball::Update(float dt)
 
 void Ball::Reset()
 {
+	m_velocity.x = ((std::rand() % 2 == 0) ? 1.0f : -1.0f);
+	m_velocity.y = ((std::rand() % 2 == 0) ? 1.0f : -1.0f);
+	m_speed = 400.0f;
+	m_angle = 45.0f;
 	m_ball.setPosition(constants::windowWidth / 2, constants::windowHeight / 2);
 }
