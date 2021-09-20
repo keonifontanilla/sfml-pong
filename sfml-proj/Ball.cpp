@@ -35,25 +35,29 @@ void Ball::PaddleCollision(Player& player, HitPos hitPos)
 
 	if (hitPos == HitPos::topLeft)
 	{
-		m_ball.setPosition(m_player1.GetPaddle().getPosition().x + 50.0f, m_player1.GetPaddle().getPosition().y - 50.0f);
+		if (player.GetVelocity().y < 0.0f)
+			m_ball.setPosition(m_player1.GetPaddle().getPosition().x + 50.0f, m_player1.GetPaddle().getPosition().y - 50.0f);
 		pos.y = -pos.y;
 		m_velocity.y = -m_velocity.y;
 	}
 	else if (hitPos == HitPos::topRight)
 	{
-		m_ball.setPosition(m_player2.GetPaddle().getPosition().x - 50.0f, m_player2.GetPaddle().getPosition().y - 50.0f);
+		if (player.GetVelocity().y < 0.0f)
+			m_ball.setPosition(m_player2.GetPaddle().getPosition().x - 50.0f, m_player2.GetPaddle().getPosition().y - 50.0f);
 		pos.y = -pos.y;
 		m_velocity.y = -m_velocity.y;
 	}
 	else if (hitPos == HitPos::bottomLeft)
 	{
-		m_ball.setPosition(m_player1.GetPaddle().getPosition().x + 50.0f, m_player1.GetPaddle().getPosition().y + constants::paddleHeight + 50.0f);
+		if (player.GetVelocity().y > 0.0f)
+			m_ball.setPosition(m_player1.GetPaddle().getPosition().x + 50.0f, m_player1.GetPaddle().getPosition().y + constants::paddleHeight + 50.0f);
 		pos.y = -pos.y;
 		m_velocity.y = -m_velocity.y;
 	}
 	else if (hitPos == HitPos::bottomRight)
 	{
-		m_ball.setPosition(m_player2.GetPaddle().getPosition().x - 50.0f, m_player2.GetPaddle().getPosition().y + constants::paddleHeight + 50.0f);
+		if (player.GetVelocity().y > 0.0f)
+			m_ball.setPosition(m_player2.GetPaddle().getPosition().x - 50.0f, m_player2.GetPaddle().getPosition().y + constants::paddleHeight + 50.0f);
 		pos.y = -pos.y;
 		m_velocity.y = -m_velocity.y;
 	}
