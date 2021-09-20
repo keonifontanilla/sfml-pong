@@ -18,6 +18,15 @@ private:
 	float m_angle = 45.0f;
 	float m_speed = 400.0f;
 
+	enum class HitPos
+	{
+		topLeft,
+		topRight,
+		side,
+		bottomLeft,
+		bottomRight
+	};
+
 public:
 	Ball(Player& player1, Player& player2, Score& score1, Score& score2, sf::Vector2f pos);
 	sf::CircleShape GetBall();
@@ -26,7 +35,7 @@ public:
 
 private:
 	bool CollisionCheck(Player& player);
-	void PaddleCollision(Player& player, std::string hitPos);
+	void PaddleCollision(Player& player, HitPos hitPos);
 	bool PaddleTopCollision(Player& player);
 };
 
