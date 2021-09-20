@@ -37,6 +37,7 @@ private:
 	bool CollisionCheck(Player& player);
 	void PaddleCollision(Player& player, HitPos hitPos);
 	bool PaddleTopCollision(Player& player);
+	bool PaddleBottomCollision(Player& player);
 };
 
 #endif // !BALL_H

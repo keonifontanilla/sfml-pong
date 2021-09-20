@@ -45,14 +45,18 @@ void Ball::PaddleCollision(Player& player, HitPos hitPos)
 		pos.y = -pos.y;
 		m_velocity.y = -m_velocity.y;
 	}
-	else if ((m_ball.getPosition().x >= player.GetPaddle().getPosition().x)
-		&& (m_ball.getPosition().x <= player.GetPaddle().getPosition().x + constants::paddleWidth)
-		&& (m_ball.getPosition().y >= player.GetPaddle().getPosition().y + constants::paddleHeight))
+	else if (hitPos == HitPos::bottomLeft)
 	{
+		m_ball.setPosition(m_player1.GetPaddle().getPosition().x + 50.0f, m_player1.GetPaddle().getPosition().y + constants::paddleHeight + 50.0f);
 		pos.y = -pos.y;
 		m_velocity.y = -m_velocity.y;
-		std::cout << "BOTTOM" << std::endl;
-	} // Side of paddle
+	}
+	else if (hitPos == HitPos::bottomRight)
+	{
+		m_ball.setPosition(m_player2.GetPaddle().getPosition().x - 50.0f, m_player2.GetPaddle().getPosition().y + constants::paddleHeight + 50.0f);
+		pos.y = -pos.y;
+		m_velocity.y = -m_velocity.y;
+	}
 	else if (m_ball.getPosition().y < yCenter - midRange && m_ball.getPosition().y >= player.GetPaddle().getPosition().y)
 	{
 		if (pos.x < 0 && pos.y > 0 || pos.x > 0 && pos.y > 0)
@@ -89,6 +93,14 @@ bool Ball::PaddleTopCollision(Player& player)
 		&& (m_ball.getPosition().y <= player.GetPaddle().getPosition().y + 20.0f));
 }
 
+bool Ball::PaddleBottomCollision(Player& player)
+{
+	return ((m_ball.getPosition().x >= player.GetPaddle().getPosition().x)
+		&& (m_ball.getPosition().x <= player.GetPaddle().getPosition().x + constants::paddleWidth)
+		&& (m_ball.getPosition().y <= player.GetPaddle().getPosition().y + constants::paddleHeight + 20.0f)
+		&& (m_ball.getPosition().y >= player.GetPaddle().getPosition().y + constants::paddleHeight - 20.0f));
+}
+
 void Ball::Update(float dt)
 {
 	float angleRad = 0.0f;	
@@ -97,6 +109,10 @@ void Ball::Update(float dt)
 		Ball::PaddleCollision(m_player1, HitPos::topLeft);
 	else if (Ball::PaddleTopCollision(m_player2))
 		Ball::PaddleCollision(m_player2, HitPos::topRight);
+	else if (Ball::PaddleBottomCollision(m_player1))
+		Ball::PaddleCollision(m_player1, HitPos::bottomLeft);
+	else if (Ball::PaddleBottomCollision(m_player2))
+		Ball::PaddleCollision(m_player2, HitPos::bottomRight);
 	else if(Ball::CollisionCheck(m_player1))
 		Ball::PaddleCollision(m_player1, HitPos::side);
 	else if (Ball::CollisionCheck(m_player2))
@@ -115,12 +131,12 @@ void Ball::Update(float dt)
 	if (m_ball.getPosition().x < 0)
 	{
 		Ball::Reset();
-		m_score1.IncrementScore();
+		m_score2.IncrementScore();
 	}
 	else if (m_ball.getPosition().x > constants::windowWidth)
 	{
 		Ball::Reset();
-		m_score2.IncrementScore();
+		m_score1.IncrementScore();
 	}
 
 	m_ball.move(pos);
