@@ -27,45 +27,45 @@ bool Ball::CollisionCheck(Player& player)
 	return m_ball.getGlobalBounds().intersects(player.GetPaddle().getGlobalBounds());
 }
 
-void Ball::PaddleCollision(Player& player, HitPos hitPos)
+void Ball::PaddleTopBottomCollision(Player& player, HitPos hitPos)
 {
-	const float midRange = 20.0f;
-	float xCenter = player.GetPaddle().getPosition().x + (player.GetPaddle().getSize().x / 2);
-    float yCenter = player.GetPaddle().getPosition().y + (player.GetPaddle().getSize().y / 2);
-
 	if (hitPos == HitPos::topLeft)
 	{
 		if (player.GetVelocity().y < 0.0f)
 			m_ball.setPosition(m_player1.GetPaddle().getPosition().x + 50.0f, m_player1.GetPaddle().getPosition().y - 50.0f);
-		pos.y = -pos.y;
-		m_velocity.y = -m_velocity.y;
-		m_angle = -m_angle;
+		
 	}
 	else if (hitPos == HitPos::topRight)
 	{
 		if (player.GetVelocity().y < 0.0f)
 			m_ball.setPosition(m_player2.GetPaddle().getPosition().x - 50.0f, m_player2.GetPaddle().getPosition().y - 50.0f);
-		pos.y = -pos.y;
-		m_velocity.y = -m_velocity.y;
-		m_angle = -m_angle;
 	}
 	else if (hitPos == HitPos::bottomLeft)
 	{
 		if (player.GetVelocity().y > 0.0f)
 			m_ball.setPosition(m_player1.GetPaddle().getPosition().x + 50.0f, m_player1.GetPaddle().getPosition().y + constants::paddleHeight + 50.0f);
-		pos.y = -pos.y;
-		m_velocity.y = -m_velocity.y;
-		m_angle = -m_angle;
 	}
 	else if (hitPos == HitPos::bottomRight)
 	{
 		if (player.GetVelocity().y > 0.0f)
 			m_ball.setPosition(m_player2.GetPaddle().getPosition().x - 50.0f, m_player2.GetPaddle().getPosition().y + constants::paddleHeight + 50.0f);
-		pos.y = -pos.y;
-		m_velocity.y = -m_velocity.y;
-		m_angle = -m_angle;
 	}
-	else if (m_ball.getPosition().y < yCenter - midRange && m_ball.getPosition().y >= player.GetPaddle().getPosition().y)
+
+	pos.y = -pos.y;
+	pos.x = -pos.x;
+	m_velocity.y = -m_velocity.y;
+	m_angle = -m_angle;
+	m_speed = -m_speed * 1.05f;
+}
+
+void Ball::PaddleSideCollision(Player& player)
+{
+	const float midRange = 20.0f;
+	float xCenter = player.GetPaddle().getPosition().x + (player.GetPaddle().getSize().x / 2);
+    float yCenter = player.GetPaddle().getPosition().y + (player.GetPaddle().getSize().y / 2);
+
+	
+	if (m_ball.getPosition().y < yCenter - midRange && m_ball.getPosition().y >= player.GetPaddle().getPosition().y)
 	{
 		if (pos.x < 0 && pos.y > 0 || pos.x > 0 && pos.y > 0)
 		{
@@ -104,7 +104,7 @@ void Ball::PaddleCollision(Player& player, HitPos hitPos)
 	m_speed = -m_speed * 1.05f;
 }
 
-bool Ball::PaddleTopCollision(Player& player)
+bool Ball::PaddleTopCollisionCheck(Player& player)
 {
 	return ((m_ball.getPosition().x >= player.GetPaddle().getPosition().x)
 		&& (m_ball.getPosition().x <= player.GetPaddle().getPosition().x + constants::paddleWidth)
@@ -112,7 +112,7 @@ bool Ball::PaddleTopCollision(Player& player)
 		&& (m_ball.getPosition().y <= player.GetPaddle().getPosition().y + 20.0f));
 }
 
-bool Ball::PaddleBottomCollision(Player& player)
+bool Ball::PaddleBottomCollisionCheck(Player& player)
 {
 	return ((m_ball.getPosition().x >= player.GetPaddle().getPosition().x)
 		&& (m_ball.getPosition().x <= player.GetPaddle().getPosition().x + constants::paddleWidth)
@@ -120,22 +120,30 @@ bool Ball::PaddleBottomCollision(Player& player)
 		&& (m_ball.getPosition().y >= player.GetPaddle().getPosition().y + constants::paddleHeight - 20.0f));
 }
 
+bool Ball::PaddleTopCornerCollisionCheck(Player& player)
+{
+	return ((m_ball.getPosition().x >= player.GetPaddle().getPosition().x + constants::paddleWidth)
+		&& (m_ball.getPosition().x <= player.GetPaddle().getPosition().x + constants::paddleWidth + 20.0f)
+		&& (m_ball.getPosition().y >= player.GetPaddle().getPosition().y - 20.0f)
+		&& (m_ball.getPosition().y <= player.GetPaddle().getPosition().y));
+}
+
 void Ball::Update(float dt)
 {
 	float angleRad = 0.0f;	
 
-	if (Ball::PaddleTopCollision(m_player1))
-		Ball::PaddleCollision(m_player1, HitPos::topLeft);
-	else if (Ball::PaddleTopCollision(m_player2))
-		Ball::PaddleCollision(m_player2, HitPos::topRight);
-	else if (Ball::PaddleBottomCollision(m_player1))
-		Ball::PaddleCollision(m_player1, HitPos::bottomLeft);
-	else if (Ball::PaddleBottomCollision(m_player2))
-		Ball::PaddleCollision(m_player2, HitPos::bottomRight);
+	if (Ball::PaddleTopCollisionCheck(m_player1))
+		Ball::PaddleTopBottomCollision(m_player1, HitPos::topLeft);
+	else if (Ball::PaddleTopCollisionCheck(m_player2))
+		Ball::PaddleTopBottomCollision(m_player2, HitPos::topRight);
+	else if (Ball::PaddleBottomCollisionCheck(m_player1))
+		Ball::PaddleTopBottomCollision(m_player1, HitPos::bottomLeft);
+	else if (Ball::PaddleBottomCollisionCheck(m_player2))
+		Ball::PaddleTopBottomCollision(m_player2, HitPos::bottomRight);
 	else if(Ball::CollisionCheck(m_player1))
-		Ball::PaddleCollision(m_player1, HitPos::side);
+		Ball::PaddleSideCollision(m_player1);
 	else if (Ball::CollisionCheck(m_player2))
-		Ball::PaddleCollision(m_player2, HitPos::side);
+		Ball::PaddleSideCollision(m_player2);
 
 	angleRad = m_angle * constants::PI / 180.0f;
 	pos.x = m_velocity.x * dt * std::cos(angleRad) * m_speed;

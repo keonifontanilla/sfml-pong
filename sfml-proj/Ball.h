@@ -35,9 +35,11 @@ public:
 
 private:
 	bool CollisionCheck(Player& player);
-	void PaddleCollision(Player& player, HitPos hitPos);
-	bool PaddleTopCollision(Player& player);
-	bool PaddleBottomCollision(Player& player);
+	void PaddleTopBottomCollision(Player& player, HitPos hitPos);
+	void PaddleSideCollision(Player& player);
+	bool PaddleTopCollisionCheck(Player& player);
+	bool PaddleBottomCollisionCheck(Player& player);
+	bool PaddleTopCornerCollisionCheck(Player& player);
 };
 
 #endif // !BALL_H
