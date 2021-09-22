@@ -3,7 +3,6 @@
 
 Score::Score(sf::Font& font, sf::Vector2f pos)
 {
-	font.loadFromFile("font.ttf");
 	m_text.setPosition(pos.x, pos.y);
 	m_text.setFont(font);
 	m_text.setCharacterSize(24);

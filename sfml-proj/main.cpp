@@ -28,7 +28,7 @@ int main()
         float dt = clock.restart().asSeconds();
 
         game.Update(startPlaying, dt);
-        game.Render();
+        game.Render(startPlaying);
     }
     
     return 0;

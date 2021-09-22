@@ -12,14 +12,15 @@ private:
 	Player m_player1;
 	Player m_player2;
 	Ball m_ball;
-	sf::Font font;
+	sf::Font m_font;
 	Score m_score1;
 	Score m_score2;
+	sf::Text m_startMsg;
 
 public:
 	Game(sf::RenderWindow& window);
 	void Update(bool& startPlaying, float dt);
-	void Render();
+	void Render(bool startPlaying);
 };
 
 #endif // !GAME_H
