@@ -1,7 +1,4 @@
-#include <SFML/Graphics.hpp>
-#include <cmath>
 #include "Ball.h"
-#include <iostream>
 
 Ball::Ball(Player& player1, Player& player2, Score& score1, Score& score2, sf::Vector2f pos)
 	: m_ball(constants::ballRadius),

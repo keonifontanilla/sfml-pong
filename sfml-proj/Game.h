@@ -1,5 +1,7 @@
 #ifndef GAME_H
 #define GAME_H
+#include <SFML/Graphics.hpp>
+#include <SFML/Network.hpp>
 #include "Player.h"
 #include "Ball.h"
 #include "Score.h"
@@ -8,7 +10,7 @@
 class Game
 {
 private:
-	sf::RenderWindow& m_window;
+	sf::RenderWindow m_window;
 	Player m_player1;
 	Player m_player2;
 	Ball m_ball;
@@ -18,9 +20,10 @@ private:
 	sf::Text m_startMsg;
 
 public:
-	Game(sf::RenderWindow& window);
+	Game(char connectionOption);
 	void Update(bool& startPlaying, float dt);
 	void Render(bool startPlaying);
+	void MainGameLoop(sf::Clock, bool& startPlaying);
 };
 
 #endif // !GAME_H

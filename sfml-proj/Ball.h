@@ -1,5 +1,8 @@
 #ifndef BALL_H
 #define BALL_H
+#include <SFML/Graphics.hpp>
+#include <cmath>
+#include <iostream>
 #include "Constants.h"
 #include "Player.h"
 #include "Score.h"

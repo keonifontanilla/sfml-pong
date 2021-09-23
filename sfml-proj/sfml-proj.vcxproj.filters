@@ -25,6 +25,9 @@
     <Filter Include="Score">
       <UniqueIdentifier>{553a568b-d6ac-4ceb-920c-b51ae89b1c3f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Server">
+      <UniqueIdentifier>{2720c43b-2ee8-4adc-b5b1-2f91d4adb74e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -41,6 +44,9 @@
     </ClCompile>
     <ClCompile Include="Score.cpp">
       <Filter>Score</Filter>
+    </ClCompile>
+    <ClCompile Include="Server.cpp">
+      <Filter>Server</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -61,6 +67,9 @@
     </ClInclude>
     <ClInclude Include="Score.h">
       <Filter>Score</Filter>
+    </ClInclude>
+    <ClInclude Include="Server.h">
+      <Filter>Server</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
