@@ -28,6 +28,9 @@
     <Filter Include="Server">
       <UniqueIdentifier>{2720c43b-2ee8-4adc-b5b1-2f91d4adb74e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Client">
+      <UniqueIdentifier>{ab64418a-76c0-4ba5-a843-2a61b81bf022}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -47,6 +50,9 @@
     </ClCompile>
     <ClCompile Include="Server.cpp">
       <Filter>Server</Filter>
+    </ClCompile>
+    <ClCompile Include="Client.cpp">
+      <Filter>Client</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -70,6 +76,9 @@
     </ClInclude>
     <ClInclude Include="Server.h">
       <Filter>Server</Filter>
+    </ClInclude>
+    <ClInclude Include="Client.h">
+      <Filter>Client</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

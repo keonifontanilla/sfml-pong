@@ -1,11 +1,12 @@
 #ifndef GAME_H
 #define GAME_H
 #include <SFML/Graphics.hpp>
-#include <SFML/Network.hpp>
 #include "Player.h"
 #include "Ball.h"
 #include "Score.h"
 #include "Constants.h"
+#include "Server.h"
+#include "Client.h"
 
 class Game
 {
@@ -18,6 +19,9 @@ private:
 	Score m_score1;
 	Score m_score2;
 	sf::Text m_startMsg;
+
+	Server m_server;
+	Client m_client;
 
 public:
 	Game(char connectionOption);

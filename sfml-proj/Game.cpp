@@ -9,11 +9,9 @@ Game::Game(char connectionOption)
     m_ball(m_player1, m_player2, m_score1, m_score2, sf::Vector2f(m_window.getSize().x / 2.0f, m_window.getSize().y / 2.0f))
 {
     if (connectionOption == 'H' || connectionOption == 'h')
-    {
-        sf::UdpSocket socket;
-        if (socket.bind(50000) == sf::Socket::Done)
-            std::cout << "Server Connected" << std::endl;
-    }
+        m_server.LaunchServer();
+    else
+        m_client.ClientConnect();
 
     m_window.setFramerateLimit(60);
     m_font.loadFromFile("font.ttf");
