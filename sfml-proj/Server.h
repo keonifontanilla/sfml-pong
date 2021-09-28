@@ -5,8 +5,14 @@
 
 class Server
 {
+private:
+	sf::UdpSocket m_socket;
+
 public:
-	void LaunchServer();
+	bool LaunchServer();
+	void ReceiveConnectionMsg();
+	void SendPaddlePos(float x, float y);
+	sf::Vector2f ReceivePaddlePos();
 };
 
 #endif // !SERVER_H
