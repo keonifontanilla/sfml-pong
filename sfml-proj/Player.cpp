@@ -7,8 +7,8 @@ Player::Player(Server& server, Client& client, char option)
 	m_client(client),
 	m_option(option)
 {
-	m_paddle1.setPosition(constants::windowWidth - constants::paddleWidth, 5.0f);
-	m_paddle2.setPosition(0.0f, 5.0f);
+	m_paddle1.setPosition(0.0f, 5.0f);
+	m_paddle2.setPosition(constants::windowWidth - constants::paddleWidth, 5.0f);
 }
 
 sf::RectangleShape Player::GetPaddle1()

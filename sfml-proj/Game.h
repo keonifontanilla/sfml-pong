@@ -13,7 +13,7 @@ class Game
 private:
 	sf::RenderWindow m_window;
 	Player m_player;
-	//Ball m_ball;
+	Ball m_ball;
 	sf::Font m_font;
 	Score m_score1;
 	Score m_score2;

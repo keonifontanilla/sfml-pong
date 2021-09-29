@@ -10,14 +10,14 @@
 class Ball
 {
 private:
-	Player& m_player1;
-	Player& m_player2;
+	Player& m_player;
 	sf::CircleShape m_ball;
 	sf::Vector2f m_velocity;
 	sf::Vector2f pos;
 	Score& m_score1;
 	Score& m_score2;
 
+	char m_option = ' ';
 	float m_angle = 45.0f;
 	float m_speed = 400.0f;
 
@@ -31,18 +31,20 @@ private:
 	};
 
 public:
-	Ball(Player& player1, Player& player2, Score& score1, Score& score2, sf::Vector2f pos);
+	Ball(Player& player, Score& score1, Score& score2, char option);
 	sf::CircleShape GetBall();
 	void Update(float dt);
 	void Reset();
 
 private:
-	bool CollisionCheck(Player& player);
-	void PaddleTopBottomCollision(Player& player, HitPos hitPos);
-	void PaddleSideCollision(Player& player);
-	bool PaddleTopCollisionCheck(Player& player);
-	bool PaddleBottomCollisionCheck(Player& player);
-	bool PaddleTopCornerCollisionCheck(Player& player);
+	sf::RectangleShape PlayerPaddle();
+	bool CollisionCheck();
+	void PaddleTopCollision();
+	void PaddleBottomCollision();
+	void PaddleSideCollision();
+	bool PaddleTopCollisionCheck();
+	bool PaddleBottomCollisionCheck();
+	bool PaddleTopCornerCollisionCheck();
 };
 
 #endif // !BALL_H
